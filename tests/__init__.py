@@ -1,1 +1,4 @@
-"""Test package initialization."""
+
+"""
+Tests for wheelchair-bot package
+"""
