@@ -1,147 +1,140 @@
-# 🦽 Wheelchair Bot
 
-A modern monorepo for wheelchair automation and control, featuring a FastAPI backend and React frontend.
+# Wheelchair-Bot
 
-## 📋 Overview
+A Python interface for controlling popular electric wheelchairs using game controllers (Xbox, PlayStation) or custom joysticks.
 
-Wheelchair Bot is a comprehensive solution for controlling and monitoring a wheelchair bot through a web interface. The project is organized as a monorepo with separate packages for backend, frontend, and shared utilities.
+## Features
 
-## 🏗️ Project Structure
+- **Multiple Wheelchair Models**: Pre-configured support for popular electric wheelchair models
+  - Permobil M3 Corpus
+  - Quantum Q6 Edge
+  - Invacare TDX SP2
+  - Pride Jazzy Elite HD
 
-```
-Wheelchair-Bot/
-├── packages/
-│   ├── backend/           # FastAPI REST API service
-│   ├── frontend/          # React web interface
-│   └── shared/            # Shared utilities and types
-├── docs/                  # Documentation
-├── pyproject.toml         # Root Python configuration
-├── package.json           # Root workspace configuration
-└── README.md              # This file
-```
+- **Controller Support**: 
+  - Gamepad controllers (Xbox, PlayStation, etc.) via pygame
+  - Custom joystick interfaces
+  - Easy-to-extend controller base class
 
-## ✨ Features
+- **Motor Control**:
+  - Differential drive kinematics
+  - Direct motor speed control
+  - Velocity-based control
 
-### Backend
-- RESTful API built with FastAPI
-- Health monitoring endpoints
-- Movement control API
-- Configuration management
-- Comprehensive test suite
+- **Safety Features**:
+  - Speed limiting
+  - Acceleration limiting
+  - Deadman switch
+  - Emergency stop
 
-### Frontend
-- Modern React-based UI
-- Real-time status monitoring
-- Intuitive movement controls
-- Responsive design
-- API integration via proxy
+## Installation
 
-### Shared
-- Common data models (Pydantic)
-- Shared constants and utilities
-- Type definitions
-
-## 🚀 Quick Start
-
-### Prerequisites
-
-- Python 3.9 or higher
-- Node.js 18 or higher
-- npm 9 or higher
-
-### Installation
-
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/mrhegemon/Wheelchair-Bot.git
-   cd Wheelchair-Bot
-   ```
-
-2. **Install Python dependencies**
-   ```bash
-   # Install shared library
-   cd packages/shared && pip install -e ".[dev]" && cd ../..
-   
-   # Install backend
-   cd packages/backend && pip install -e ".[dev]" && cd ../..
-   ```
-
-3. **Install Node.js dependencies**
-   ```bash
-   npm install
-   ```
-
-### Running the Application
-
-1. **Start the backend** (in one terminal):
-   ```bash
-   cd packages/backend
-   python -m wheelchair_bot.main
-   ```
-   API available at: http://localhost:8000
-
-2. **Start the frontend** (in another terminal):
-   ```bash
-   cd packages/frontend
-   npm run dev
-   ```
-   Web interface available at: http://localhost:3000
-
-## 📚 Documentation
-
-- [Getting Started Guide](docs/getting-started.md)
-- [Architecture Overview](docs/architecture.md)
-- [Backend README](packages/backend/README.md)
-- [Frontend README](packages/frontend/README.md)
-- [Shared Library README](packages/shared/README.md)
-
-## 🧪 Testing
-
-Run backend tests:
+1. Clone the repository:
 ```bash
-cd packages/backend
-pytest
+git clone https://github.com/mrhegemon/Wheelchair-Bot.git
+cd Wheelchair-Bot
 ```
 
-Run shared library tests:
+2. Install dependencies:
 ```bash
-cd packages/shared
-pytest
+pip install -r requirements.txt
 ```
 
-## 🛠️ Development
+## Quick Start
 
-### Code Formatting
+### View Supported Wheelchair Models
+
 ```bash
-black packages/
+python examples/show_models.py
 ```
 
-### Linting
+### Run Simulation
+
+Test the interface with a simulated joystick controller:
+
 ```bash
-# Python
-ruff check packages/
-
-# JavaScript
-cd packages/frontend && npm run lint
+python examples/simulated_control.py
 ```
 
-## 📝 API Endpoints
+### Control with Gamepad
 
-- `GET /` - API information
-- `GET /health` - Health check
-- `GET /api/status` - Get wheelchair bot status
-- `POST /api/move` - Send movement commands
-- Interactive docs at: http://localhost:8000/docs
+Connect an Xbox or PlayStation controller and run:
 
-## 🤝 Contributing
+```bash
+python examples/basic_control.py
+```
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+## Usage
 
-## 📄 License
+### Basic Example
 
-This project is open source and available under the MIT License.
+```python
+from wheelchair_bot.wheelchairs.models import QuantumQ6Edge
+from wheelchair_bot.controllers.gamepad import GamepadController
+from wheelchair_bot.motors.differential import DifferentialDriveController
+from wheelchair_bot.system import WheelchairControlSystem
 
-## 🔗 Links
+# Create wheelchair instance
+wheelchair = QuantumQ6Edge()
 
-- [API Documentation](http://localhost:8000/docs) (when backend is running)
-- [GitHub Repository](https://github.com/mrhegemon/Wheelchair-Bot)
+# Create controller (gamepad at index 0)
+controller = GamepadController(controller_id=0)
+
+# Create motor controller
+motor_controller = DifferentialDriveController()
+
+# Create and configure control system
+control_system = WheelchairControlSystem(
+    wheelchair=wheelchair,
+    controller=controller,
+    motor_controller=motor_controller,
+)
+
+# Set safety limits
+control_system.speed_limiter.set_max_linear(0.5)  # 50% max speed
+
+# Run the control system
+control_system.run()
+```
+
+### Creating a Custom Wheelchair Model
+
+```python
+from wheelchair_bot.wheelchairs.base import Wheelchair
+
+class MyWheelchair(Wheelchair):
+    def __init__(self):
+        super().__init__(
+            name="My Custom Wheelchair",
+            max_speed=2.0,  # m/s
+            wheel_base=0.45,  # meters
+            wheel_diameter=0.35,  # meters
+        )
+    
+    def get_motor_config(self):
+        return {
+            "type": "mid_wheel_drive",
+            "motor_count": 2,
+            "motor_type": "brushless_dc",
+            "max_voltage": 24,
+            "max_current": 50,
+        }
+```
+
+## Architecture
+
+The system consists of four main components:
+
+1. **Wheelchair Models** (`wheelchair_bot.wheelchairs`): Define physical properties and motor configurations
+2. **Controllers** (`wheelchair_bot.controllers`): Handle input from various controller types
+3. **Motor Controllers** (`wheelchair_bot.motors`): Convert velocity commands to motor outputs
+4. **Safety Features** (`wheelchair_bot.safety`): Implement speed/acceleration limits and safety switches
+
+## Safety
+
+This interface includes multiple safety features:
+
+- **Speed Limiter**: Caps maximum linear and angular velocities
+- **Acceleration Limiter**: Smooths acceleration/deceleration
+- **Deadman Switch**: Requires periodic confirmation of operator presence
+- **Emergency Stop**: Immediately halts all motor activity
