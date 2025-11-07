@@ -1,0 +1,58 @@
+version: '3.8'
+
+services:
+  teleopd:
+    build: .
+    container_name: wheelchair-teleopd
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./config:/app/config
+    restart: unless-stopped
+    command: python services/teleopd/main.py
+
+  streamer:
+    build: .
+    container_name: wheelchair-streamer
+    ports:
+      - "8001:8001"
+    volumes:
+      - ./config:/app/config
+    devices:
+      - /dev/video0:/dev/video0
+    privileged: true
+    restart: unless-stopped
+    command: python services/streamer/main.py
+
+  safety-agent:
+    build: .
+    container_name: wheelchair-safety
+    ports:
+      - "8002:8002"
+    volumes:
+      - ./config:/app/config
+    restart: unless-stopped
+    depends_on:
+      - teleopd
+    command: python services/safety_agent/main.py
+
+  net-agent:
+    build: .
+    container_name: wheelchair-network
+    ports:
+      - "8003:8003"
+    volumes:
+      - ./config:/app/config
+    network_mode: host
+    restart: unless-stopped
+    command: python services/net_agent/main.py
+
+  web-client:
+    build: .
+    container_name: wheelchair-web
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./web_client:/app/web_client
+    restart: unless-stopped
+    command: python -m http.server 8080 --directory /app/web_client

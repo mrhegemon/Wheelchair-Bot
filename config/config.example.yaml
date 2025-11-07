@@ -1,0 +1,52 @@
+# Example configuration for Wheelchair Robot services
+# Copy this file to config.yaml and adjust settings
+
+# Teleopd service configuration
+teleopd:
+  host: "0.0.0.0"
+  port: 8000
+  max_speed: 1.0
+  enable_estop: true
+  control_mode: "joystick"
+  timeout_seconds: 5
+
+# Streamer service configuration
+streamer:
+  host: "0.0.0.0"
+  port: 8001
+  camera:
+    device: "/dev/video0"
+    resolution: "640x480"
+    framerate: 30
+  audio:
+    enabled: true
+    device: "default"
+
+# Safety agent configuration
+safety_agent:
+  host: "0.0.0.0"
+  port: 8002
+  check_interval_seconds: 1
+  command_timeout_seconds: 5
+  enable_auto_estop: true
+  teleopd_url: "http://localhost:8000"
+
+# Net agent configuration
+net_agent:
+  host: "0.0.0.0"
+  port: 8003
+  check_interval_seconds: 5
+  primary_interface: null  # auto-detect
+  dns_servers:
+    - "8.8.8.8"
+    - "8.8.4.4"
+  enable_fallback: true
+
+# Web client configuration
+web_client:
+  host: "0.0.0.0"
+  port: 8080
+  teleopd_url: "http://localhost:8000"
+  streamer_url: "http://localhost:8001"
+  safety_url: "http://localhost:8002"
+  net_agent_url: "http://localhost:8003"

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wheelchair Robot Controller</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🦽 Wheelchair Robot Controller</h1>
+            <div class="status-bar">
+                <span id="connection-status" class="status-badge disconnected">Disconnected</span>
+                <span id="estop-status" class="status-badge ok">Normal</span>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <!-- Video Stream -->
+            <div class="video-section">
+                <div class="video-container">
+                    <video id="video-stream" autoplay playsinline muted>
+                        <p>Video stream not available</p>
+                    </video>
+                    <div class="video-overlay">
+                        <div id="stream-status">Stream Inactive</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Control Panel -->
+            <div class="control-section">
+                <!-- Emergency Stop -->
+                <div class="estop-container">
+                    <button id="estop-btn" class="estop-btn">
+                        🛑 EMERGENCY STOP
+                    </button>
+                    <button id="estop-reset-btn" class="estop-reset-btn" disabled>
+                        Reset E-Stop
+                    </button>
+                </div>
+
+                <!-- Joystick -->
+                <div class="joystick-container">
+                    <h3>Control</h3>
+                    <div id="joystick-area" class="joystick-area">
+                        <div id="joystick" class="joystick"></div>
+                    </div>
+                    <div class="speed-control">
+                        <label for="speed-slider">Speed:</label>
+                        <input type="range" id="speed-slider" min="0" max="100" value="50">
+                        <span id="speed-value">50%</span>
+                    </div>
+                </div>
+
+                <!-- Status Information -->
+                <div class="info-panel">
+                    <h3>System Status</h3>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <label>Command:</label>
+                            <span id="current-command">-</span>
+                        </div>
+                        <div class="info-item">
+                            <label>Network:</label>
+                            <span id="network-status">-</span>
+                        </div>
+                        <div class="info-item">
+                            <label>Safety:</label>
+                            <span id="safety-status">-</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
