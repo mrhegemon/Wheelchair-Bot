@@ -1,3 +1,4 @@
+
 # Wheelchair-Bot
 
 A Python interface for controlling popular electric wheelchairs using game controllers (Xbox, PlayStation) or custom joysticks.
@@ -137,17 +138,3 @@ This interface includes multiple safety features:
 - **Acceleration Limiter**: Smooths acceleration/deceleration
 - **Deadman Switch**: Requires periodic confirmation of operator presence
 - **Emergency Stop**: Immediately halts all motor activity
-
-⚠️ **WARNING**: This is a software interface for educational and development purposes. Actual wheelchair control requires proper hardware integration, extensive testing, and compliance with medical device regulations. Always consult with medical professionals and follow all safety guidelines.
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## License
-
-MIT License - See LICENSE file for details
-
-## Disclaimer
-
-This software is provided for educational and development purposes only. The authors are not responsible for any injury, damage, or other consequences resulting from the use of this software. Always prioritize safety and consult with qualified professionals before implementing any wheelchair control system.
