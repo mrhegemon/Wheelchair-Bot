@@ -165,7 +165,3 @@ Modify `styles.css` to customize colors, fonts, and layout.
 - Ensure data channel is open (check connection info panel)
 - Verify the bot is processing received commands
 - Check browser console for command send errors
-
-## License
-
-MIT License - feel free to use and modify for your projects.
