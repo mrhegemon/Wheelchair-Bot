@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dark_gray"
+    tools:context=".MainActivity">
+
+    <!-- Video Stream Surface -->
+    <org.webrtc.SurfaceViewRenderer
+        android:id="@+id/surfaceView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/controlPanel"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Control Panel -->
+    <LinearLayout
+        android:id="@+id/controlPanel"
+        android:layout_width="300dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:background="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <!-- Connection Status -->
+        <TextView
+            android:id="@+id/connectionStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/connection_status"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textAlignment="center"
+            android:padding="8dp" />
+
+        <!-- Connect/Disconnect Button -->
+        <Button
+            android:id="@+id/connectButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/connect"
+            android:layout_marginTop="8dp" />
+
+        <!-- Settings Button -->
+        <Button
+            android:id="@+id/settingsButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/settings"
+            android:layout_marginTop="8dp" />
+
+        <!-- Joystick Container -->
+        <FrameLayout
+            android:id="@+id/joystickContainer"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="16dp"
+            android:background="@color/dark_gray">
+
+            <com.wheelchairbot.controller.JoystickView
+                android:id="@+id/joystick"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center" />
+        </FrameLayout>
+
+        <!-- Speed and Direction Info -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="8dp">
+
+            <TextView
+                android:id="@+id/speedLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/speed_label"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:padding="4dp" />
+
+            <TextView
+                android:id="@+id/directionLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/direction_label"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:padding="4dp" />
+        </LinearLayout>
+
+        <!-- Emergency Stop Button -->
+        <Button
+            android:id="@+id/emergencyStopButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/emergency_stop"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/emergency_red"
+            android:textStyle="bold"
+            android:layout_marginTop="16dp"
+            android:padding="16dp" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
