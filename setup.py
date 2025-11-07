@@ -1,14 +1,9 @@
-"""
-Setup configuration for Wheelchair-Bot
-"""
+"""Setup script for wheelchair_controller package."""
 
 from setuptools import setup, find_packages
 
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
-
-with open("requirements.txt", "r", encoding="utf-8") as fh:
-    requirements = [line.strip() for line in fh if line.strip() and not line.startswith("#")]
 
 setup(
     name="wheelchair-bot",
@@ -20,16 +15,39 @@ setup(
     url="https://github.com/mrhegemon/Wheelchair-Bot",
     packages=find_packages(),
     classifiers=[
-        "Development Status :: 3 - Alpha",
+        "Development Status :: 4 - Beta",
+        "Intended Audience :: Developers",
+        "Topic :: System :: Hardware",
         "Intended Audience :: Developers",
         "Topic :: Software Development :: Libraries :: Python Modules",
-        "License :: OSI Approved :: MIT License",
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
+        "Operating System :: POSIX :: Linux",
+    ],
+    python_requires=">=3.7",
+    install_requires=[
+        # No hard dependencies - RPi.GPIO only needed on actual hardware
+    ],
+    extras_require={
+        "rpi": ["RPi.GPIO>=0.7.1"],
+        "keyboard": ["keyboard>=0.13.5"],
+        "dev": [
+            "pytest>=7.4.0",
+            "pytest-cov>=4.1.0",
+            "pylint>=3.0.0",
+            "black>=23.0.0",
+        ],
+    },
+    entry_points={
+        "console_scripts": [
+            "wheelchair-controller=main:main",
+        ],
+    },
+    include_package_data=True,
     ],
     python_requires=">=3.7",
     install_requires=requirements,
