@@ -48,15 +48,4 @@ setup(
         ],
     },
     include_package_data=True,
-    ],
-    python_requires=">=3.7",
-    install_requires=requirements,
-    extras_require={
-        "dev": [
-            "pytest>=7.0",
-            "pytest-cov>=4.0",
-            "black>=23.0",
-            "flake8>=6.0",
-        ],
-    },
 )
