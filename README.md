@@ -2,6 +2,8 @@
 
 A lightweight, universal tele-robotics kit that turns almost any powered wheelchair into a remotely driven robot using commodity parts, an Android phone and/or a Raspberry Pi, and a camera—all accessed through a secure web interface.
 
+<img width="1547" height="838" alt="Screenshot 2025-11-07 at 5 30 06 PM" src="https://github.com/user-attachments/assets/8a9a2082-dc61-4b63-ac50-d87a09e03687" />
+
 ## Overview
 
 Wheelchair-Bot is designed as a modular, service-based system that requires minimal hardware and avoids heavy frameworks like ROS. It provides a complete solution for remote wheelchair control with real-time video streaming, responsive controls, and comprehensive safety features.
