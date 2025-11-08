@@ -1,15 +1,35 @@
 # Wheelchair-Bot
 
-A Raspberry Pi-based controller application for wheelchair robots with motor control, keyboard interface, and safety features.
+A comprehensive wheelchair robotics platform with motor control, safety features, and a complete emulator for development and testing without hardware.
 
 ## Features
 
-- **Motor Control**: Differential drive motor control using GPIO pins
-- **Keyboard Interface**: Simple keyboard control for testing and operation
-- **Safety Features**: Emergency stop and speed limiting
-- **Mock Mode**: Test without Raspberry Pi hardware
-- **PWM Speed Control**: Smooth speed control using PWM
-- **Configurable**: JSON-based configuration for easy customization
+- **🦽 Hardware Control**: Differential drive motor control using GPIO pins
+- **🎮 Multiple Input Methods**: Keyboard, gamepad, joystick support
+- **🛡️ Safety Features**: Emergency stop, deadman switch, and speed limiting
+- **🔬 Complete Emulator**: Full physics-based simulation for development without hardware
+- **⚡ PWM Speed Control**: Smooth speed control using PWM
+- **🧪 Comprehensive Testing**: 95 tests with 74% coverage
+- **⚙️ Configurable**: YAML/JSON-based configuration for easy customization
+
+## Quick Start
+
+### Emulator (No Hardware Required)
+
+Run the wheelchair emulator for development and testing:
+
+```bash
+# Install dependencies
+pip install -e ".[dev]"
+
+# Run emulator
+wheelchair-sim --config config/default.yaml
+
+# Run tests
+make test
+```
+
+See [EMULATOR.md](EMULATOR.md) for complete emulator documentation.
 
 ## Hardware Requirements
 
@@ -106,17 +126,39 @@ Once running, use these keys to control the wheelchair:
 
 ```
 Wheelchair-Bot/
-├── wheelchair_controller/      # Main controller package
-│   ├── __init__.py            # Package initialization
-│   ├── controller.py          # Main wheelchair controller
-│   ├── motor_driver.py        # Motor driver interface
+├── src/wheelchair/             # Emulator and simulation framework
+│   ├── interfaces.py           # Abstract interfaces for all subsystems
+│   ├── config.py               # Configuration system (YAML/TOML)
+│   ├── factory.py              # Factory for creating emulator instances
+│   ├── cli.py                  # Command-line interface
+│   └── emulator/               # Emulator implementations
+│       ├── drive.py            # Differential drive physics
+│       ├── controller.py       # Scriptable controller input
+│       ├── sensors.py          # IMU and proximity sensors
+│       ├── power.py            # Battery simulation
+│       ├── safety.py           # Safety monitoring
+│       └── loop.py             # Simulation event loop
+├── wheelchair_bot/             # Core wheelchair control library
+│   ├── wheelchairs/            # Wheelchair models
+│   ├── controllers/            # Controller interfaces
+│   ├── motors/                 # Motor control
+│   └── safety/                 # Safety features
+├── wheelchair_controller/      # Legacy controller package
+│   ├── controller.py           # Main wheelchair controller
+│   ├── motor_driver.py         # Motor driver interface
 │   └── keyboard_control.py    # Keyboard control interface
-├── config/                    # Configuration files
-│   └── default_config.json    # Default configuration
-├── tests/                     # Test files (future)
-├── main.py                    # Main entry point
-├── requirements.txt           # Python dependencies
-└── README.md                  # This file
+├── tests/                      # Test suite for existing code
+├── src/tests/                  # Emulator test suite (76 tests)
+├── config/                     # Configuration files
+│   ├── default.yaml            # Emulator configuration
+│   └── default_config.json     # Hardware configuration
+├── scripts/
+│   └── run_tests.py            # Consolidated test runner
+├── Makefile                    # Build and test targets
+├── main.py                     # Main entry point
+├── pyproject.toml              # Python project metadata
+├── README.md                   # This file
+└── EMULATOR.md                 # Emulator documentation
 ```
 
 ## Configuration
@@ -137,15 +179,37 @@ Edit `config/default_config.json` to customize:
 
 ## Development
 
-### Running Unit Tests
+### Running Tests
 
-Run the test suite:
+Run the complete test suite (95 tests):
 
 ```bash
-python3 -m unittest tests.test_controller -v
+# Run all tests with coverage
+make test
+
+# Or use the test runner directly
+python scripts/run_tests.py
+
+# Run specific test modules
+pytest tests/test_controller.py -v
+pytest src/tests/test_emulator_drive.py -v
 ```
 
-All tests use mock GPIO, so they can be run on any system without Raspberry Pi hardware.
+### Emulator Development
+
+The emulator enables development without hardware:
+
+```bash
+# Run emulator with custom duration
+wheelchair-sim --duration 30
+
+# Run emulator at 2x speed
+# Edit config/default.yaml: simulation.realtime_factor: 2.0
+wheelchair-sim --config config/default.yaml
+
+# See emulator documentation
+cat EMULATOR.md
+```
 
 ### Manual Testing
 
