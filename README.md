@@ -2,6 +2,13 @@
 
 A lightweight, universal tele-robotics kit that turns almost any powered wheelchair into a remotely driven robot using commodity parts, an Android phone and/or a Raspberry Pi, and a camera—all accessed through a secure web interface.
 
+
+Abount 1 in 100 people are using a wheelchair. If you include scooters, it’s about 1 in 50. There’s a saying in accessibility, you’re either disabled or not yet disabled. Half of us will spend time in a wheelchair. Everyone in a wheelchair wishes they had an electric wheelchair, but only about one and 50 wheelchairs are electric. 
+
+Imagine not being able to move and use your arms at the same time. Imagine falling down and not being able to get up if you go off a slight ledge. Wheelchairs need to be smart. 800 million people would live better lives.
+
+My dad‘s been disabled for almost 15 years. I want his wheelchair to go to him when he falls. I want him to be able to travel without thinking. I want everyone with a disability to not have a compromised quality of life.
+
 Extended Docs:
 
 [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/mrhegemon/Wheelchair-Bot)
