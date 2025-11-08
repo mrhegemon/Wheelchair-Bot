@@ -78,7 +78,7 @@ RUN pip install --user --no-cache-dir --trusted-host pypi.org --trusted-host fil
 COPY --chown=developer:developer wheelchair_bot wheelchair_bot/
 COPY --chown=developer:developer wheelchair_controller wheelchair_controller/
 COPY --chown=developer:developer src src/
-COPY --chown=developer:developer main.py demo.py ./
+COPY --chown=developer:developer main.py demo.py README.md ./
 COPY --chown=developer:developer config config/
 COPY --chown=developer:developer pyproject.toml setup.py ./
 
